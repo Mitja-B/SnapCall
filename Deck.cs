@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SnapCall
 {
@@ -43,20 +44,20 @@ namespace SnapCall
             position = 0;
         }
 
-        // TODO: Draw actual cards
-        public ulong Draw(int count)
+        public IEnumerable<ICard> Draw(int count)
         {
-            ulong hand = 0;
+            ulong bitmap = 0;
             for (int i = 0; i < count; i++)
             {
                 // Skip cards that were manually removed via removedCards
                 while ((cards[position] & removedCards) != 0) position++;
 
                 // Add cards to bitmap hand through logical OR (result is 1 if either bit is 1) compound assignment
-                hand |= cards[position];
+                bitmap |= cards[position];
                 position++;
             }
-            return hand;
+
+            return Utilities.GetCardsFromBitmap(bitmap);
         }
     }
 }

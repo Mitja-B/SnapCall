@@ -1,8 +1,10 @@
-﻿namespace SnapCall
+﻿using System.Collections.Generic;
+
+namespace SnapCall
 {
     public interface IDeck
     {
-        ulong Draw(int count);
+        IEnumerable<ICard> Draw(int count);
         void RefillAndShuffle();
     }
 }
