@@ -77,6 +77,8 @@
     <Compile Include="IDeck.cs" />
     <Compile Include="IHand.cs" />
     <Compile Include="IHandFactory.cs" />
+    <Compile Include="IHandStrength.cs" />
+    <Compile Include="IHandEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
