@@ -103,9 +103,12 @@ namespace SnapCall
                 {
                     strength.HandRanking = HandRanking.FourOfAKind;
                     strength.Kickers.Add(fourOfAKind);
-                    strength.Kickers.AddRange(orderedCards
+                    foreach (var card in orderedCards
                         .Where(card => (int)card.Rank != fourOfAKind)
-                        .Select(card => (int)card.Rank));
+                        .Select(card => (int)card.Rank))
+                    {
+                        strength.Kickers.Add(card);
+                    }
                 }
                 else if (threeOfAKind >= 0 && onePair >= 0)
                 {
@@ -116,48 +119,66 @@ namespace SnapCall
                 else if (flush)
                 {
                     strength.HandRanking = HandRanking.Flush;
-                    strength.Kickers.AddRange(orderedCards
+                    foreach (var card in orderedCards
                         .Select(card => (int)card.Rank)
-                        .Reverse());
+                        .Reverse())
+                    {
+                        strength.Kickers.Add(card);
+                    }
                 }
                 else if (straight)
                 {
                     strength.HandRanking = HandRanking.Straight;
-                    strength.Kickers.AddRange(orderedCards
+                    foreach (var card in orderedCards
                         .Select(card => (int)card.Rank)
-                        .Reverse());
+                        .Reverse())
+                    {
+                        strength.Kickers.Add(card);
+                    }
                 }
                 else if (threeOfAKind >= 0)
                 {
                     strength.HandRanking = HandRanking.ThreeOfAKind;
                     strength.Kickers.Add(threeOfAKind);
-                    strength.Kickers.AddRange(orderedCards
+                    foreach (var card in orderedCards
                         .Where(card => (int)card.Rank != threeOfAKind)
-                        .Select(card => (int)card.Rank));
+                        .Select(card => (int)card.Rank))
+                    {
+                        strength.Kickers.Add(card);
+                    }
                 }
                 else if (twoPair >= 0)
                 {
                     strength.HandRanking = HandRanking.TwoPair;
                     strength.Kickers.Add(Math.Max(twoPair, onePair));
                     strength.Kickers.Add(Math.Min(twoPair, onePair));
-                    strength.Kickers.AddRange(orderedCards
+                    foreach (var card in orderedCards
                         .Where(card => (int)card.Rank != twoPair && (int)card.Rank != onePair)
-                        .Select(card => (int)card.Rank));
+                        .Select(card => (int)card.Rank))
+                    {
+                        strength.Kickers.Add(card);
+                    }
                 }
                 else if (onePair >= 0)
                 {
                     strength.HandRanking = HandRanking.Pair;
                     strength.Kickers.Add(onePair);
-                    strength.Kickers.AddRange(orderedCards
+                    foreach (var card in orderedCards
                         .Where(card => (int)card.Rank != onePair)
-                        .Select(card => (int)card.Rank));
+                        .Select(card => (int)card.Rank))
+                    {
+                        strength.Kickers.Add(card);
+                    }
                 }
                 else
                 {
                     strength.HandRanking = HandRanking.HighCard;
-                    strength.Kickers.AddRange(orderedCards
+                    foreach (var card in orderedCards
                         .Select(card => (int)card.Rank)
-                        .Reverse());
+                        .Reverse())
+                    {
+                        strength.Kickers.Add(card);
+                    }
                 }
 
                 return strength;
