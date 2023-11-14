@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 
 namespace SnapCall
 {
     public class Hand : IHand
     {
         private IList<ICard> Cards { get; }
+        public int Count { get { return Cards.Count; } }
+        public bool IsReadOnly { get { return false; } }
 
         public Hand()
         {
@@ -197,6 +200,41 @@ namespace SnapCall
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable)Cards).GetEnumerator();
+        }
+
+        public void Add(ICard item)
+        {
+            Cards.Add(item);
+        }
+
+        public void Clear()
+        {
+            Cards.Clear();
+        }
+
+        public bool Contains(ICard item)
+        {
+            return Cards.Contains(item);
+        }
+
+        public void CopyTo(ICard[] array, int arrayIndex)
+        {
+            if (array == null)
+                throw new ArgumentNullException("The array cannot be null.");
+            if (arrayIndex < 0)
+                throw new ArgumentOutOfRangeException("The starting array index cannot be negative.");
+            if (Count > array.Length - arrayIndex)
+                throw new ArgumentException("The destination array has fewer elements than the collection.");
+
+            for (int i = 0; i < Cards.Count; i++)
+            {
+                array[i + arrayIndex] = Cards[i];
+            }
+        }
+
+        public bool Remove(ICard item)
+        {
+            return Cards.Remove(item);
         }
     }
 }

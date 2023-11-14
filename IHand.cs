@@ -2,7 +2,7 @@
 
 namespace SnapCall
 {
-    public interface IHand : IEnumerable<ICard>
+    public interface IHand : ICollection<ICard>
     {
         HandStrength GetStrength();
     }
